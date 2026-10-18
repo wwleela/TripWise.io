@@ -1,49 +1,39 @@
 # TripWise — Budget-Safe AI Trip Planner
 
-**An AI Product Management capstone for the MakeMyTrip AI Trip Assistant case.**
-
-TripWise is a working prototype for Indian travellers: authenticate, choose a supported destination, generate a catalogue-grounded day-by-day plan, see an INR estimate and explicit over-budget warning, and save/retrieve trips. A separate Make.com workflow generates a concise evidence-constrained review note via Groq and stores it in Airtable for **internal human review only**.
-
-> **Product truth:** deployed itinerary generation is deterministic and catalogue-based, not LLM-generated. Groq is used in the internal review workflow. The review explanation is never exposed in the traveller-facing UI. Do not describe the current prototype as using an LLM to generate itineraries.
+**AI Product Management capstone** for the MakeMyTrip AI Trip Assistant brief.
 
 ## Live artefacts
+- **Published app:** https://ai-trip-planner-web-7ogc.bolt.host
+- **Airtable working base/editor URL:** https://airtable.com/appYkjF5PDb1ZOyJd (not yet verified as the public assessor share/view link; replace this with a copied public view link before submission)
+- **GitHub project folder:** https://github.com/wwleela/TripWise.io/tree/main/projects/tripwise-capstone
+- **Master capstone manuscript:** https://github.com/wwleela/TripWise.io/blob/main/projects/tripwise-capstone/CAPSTONE_SUBMISSION.md
+- **LinkedIn draft:** https://github.com/wwleela/TripWise.io/blob/main/projects/tripwise-capstone/linkedin-launch-post.md
 
-- **App URL:** `[ADD THE PUBLISHED BOLT APP URL]` — not independently captured in this package; insert and verify before submission.
-- **Airtable base:** https://airtable.com/appYkjF5PDb1ZOyJd — access must be set to “Anyone with the link can view” for assessors, then re-tested in a signed-out/incognito window.
-- **Automation:** Make scenario `8009532`, “TripWise — Itinerary Review”.
-- **Repository folder:** https://github.com/wwleela/wwleela.github.io/tree/main/projects/tripwise-capstone
-- **Single graded submission:** copy `CAPSTONE_SUBMISSION.md` into one Google Doc, add the verified app and Airtable links, set “Anyone with the link can view”, and submit that one Google Doc URL. GitHub is portfolio evidence, not a substitute for the required Google Doc.
+## What this project demonstrates
+- Product discovery and explicitly labelled proto-personas.
+- RICE prioritisation, PRD-lite, INVEST user stories and precise metrics.
+- A published, catalogue-grounded trip planner with authentication and saved itineraries.
+- Make → Groq → Airtable internal explanation review queue.
+- Actual automation transcripts, eval rubric, an eight-case golden dataset and responsible-AI monitoring plan.
+- Pricing hypotheses, GTM, Value Proposition Canvas, funnel analysis and lifecycle plan.
 
-## System at a glance
+## Product truth
+The traveller-facing itinerary is generated deterministically from a curated catalogue; it is not LLM-generated. Groq is used only for a separate internal reviewer note, which remains Pending Review and is never exposed in the traveller-facing MVP. Live prices and bookings are out of scope.
 
-| Layer | Implementation | Verified status |
-|---|---|---|
-| Web app | Bolt / React | Build and typecheck passed in the latest reported build; app URL needs insertion |
-| Authentication and persistence | Supabase project `uwbhcqywmgcosyqwmmlq` | Live tables and saved trips verified |
-| Catalogue | 10 destinations, 52 activities | Live table counts verified |
-| Itinerary logic | Deterministic selection from curated catalogue; server-side total recomputation | Source inspected; real Goa, Darjeeling and Pondicherry trips saved |
-| Internal AI review | Make + Groq `openai/gpt-oss-20b` | Two scenario executions inspected; one blank response exposed a token-limit issue; later run produced non-empty text |
-| Human review log | Airtable `Itinerary_Log` | Real rows created; both deterministic Persona lookup branches returned the intended Airtable record IDs in read-only QA. A fresh app-save test is still required to verify the linked-record write end to end. |
-| Idempotency | Make Data Store `222515` | Event keys stored on successful prior runs; explicit same-event replay test still required |
+## Verified evidence and gaps
+Three saved trips were observed in Supabase: Goa, Darjeeling and Pondicherry. A previous Make test produced a blank Groq explanation at a 120-token limit; a later test produced a nonempty, appropriately caveated explanation and an Airtable row. Read-only Make tests confirmed that the family Persona lookup returns Family Trip Coordinator and the solo lookup returns Self-Serve Value Planner.
 
-## Current live evidence
+Synthetic webhook QA now passes for the latest tested event: Groq text was non-empty; Airtable row recQtH0nodr0RigUv had Review Status Pending Review and a genuine linked Family Trip Coordinator Persona (recSWWMeGcEktR5pb); Make returned HTTP 200 JSON with status=logged and the same event ID. Replay ran only the webhook, dedupe check and duplicate acknowledgement modules and did not execute Airtable Create Record. This is synthetic QA, not an app-originated save. A fresh app save, public signed-out access checks, two-user isolation test, traveller-UI internal-explanation check, public Airtable assessor share link, and the eight golden app eval cases remain release gates.
 
-- **Goa — 4 days:** group of 4; budget ₹15,000; estimated cost ₹47,000; over-budget warning true. The webhook arrived during learning mode, so this is not counted as a completed Make execution.
-- **Darjeeling — 2 days:** budget ₹15,000; estimate ₹5,212. Make executed, but Groq returned an empty string at the former 120-token cap. This failure was preserved as evidence and the token budget was raised.
-- **Pondicherry — 3 days:** budget ₹15,000; estimate ₹8,600. Make completed 5 modules; Groq produced a non-empty explanation; Airtable created record `recLjYPv8mafQ5OHN`. This record predates Persona-link routing, so its Persona link is not evidence of the new mapping working.
-- The next fresh save is required to verify the updated `persona_key`, live Persona lookup, real Airtable linked record, and Make response acknowledgement.
+## Repository contents
+- CAPSTONE_SUBMISSION.md — complete four-part master manuscript
+- docs/automation-architecture-and-evidence.md — automation structure and observed transcripts
+- docs/responsible-ai-and-monitoring.md — safeguards and bias monitoring
+- docs/pricing-gtm-growth.md — pricing, GTM, VPC, revenue scenario and funnel
+- docs/product-decisions-and-analytics.md — decision log, event taxonomy and release gates
+- docs/research-sources-and-evidence.md — source register and evidence limitations
+- evals/golden-dataset-and-scorecard.md — eight cases, rubric, assertions and honest run status
+- linkedin-launch-post.md — recruiter-oriented post draft
 
-## Portfolio contents
-
-- `CAPSTONE_SUBMISSION.md` — canonical four-part document draft
-- `docs/automation-architecture-and-evidence.md` — scenario structure and actual test transcripts
-- `docs/responsible-ai-and-monitoring.md` — specific guardrails, bias mitigations and monitoring
-- `docs/pricing-gtm-growth.md` — price, positioning, VPC, funnel and growth loop
-- `docs/product-decisions-and-analytics.md` — product decision log, event taxonomy, metric formulas and release gates
-- `docs/research-sources-and-evidence.md` — research source register and evidence limitations
-- `evals/golden-dataset-and-scorecard.md` — 8-case dataset, rubric, assertions, and honest run status
-- `linkedin-launch-post.md` — recruiter-oriented post draft
-
-## Non-negotiable reporting rule
-
-Untested means **Not tested**. Proto-personas and RICE confidence are hypotheses until primary research validates them. Never claim eight golden cases passed, public sharing is enabled, an app URL works, or Persona linking is complete without fresh evidence.
+## Required academic submission
+The assessed deliverable is one Google Doc URL only. Copy the master manuscript into one Google Doc, set “Anyone with the link can view,” and submit that single Google Doc URL. The app link belongs in Part 2 and the Airtable link belongs in Part 1. GitHub is supplemental portfolio evidence.
