@@ -65,7 +65,12 @@ It also checks the Make response body before marking logging successful. The mai
 ### Test 5 — duplicate replay before duplicate-ack branch correction
 **Input:** repeat the exact QA event ID qa-tripwise-family-link-20261018-001.
 **Observed output:** Make execution effe5b2f0c734aa49eb8206cf50aff0d completed only the webhook and Data Store existence check, in 296 ms. No second Airtable row was created. The default HTTP body was plain text “Accepted”, not the explicit JSON acknowledgement expected by save-itinerary.
-**Verdict:** duplicate suppression worked, but the acknowledgement contract was incomplete for replays. A dedicated duplicate route is being configured to return the same logged/event-ID JSON without repeating Groq or Airtable writes. Do not claim the duplicate-ack branch passes until its replay test is observed.
+**Verdict:** this first replay confirmed deduplication but exposed the missing explicit acknowledgement. The router was then implemented with separate new-event and duplicate-event routes.
+
+### Test 6 — duplicate-event route after correction
+**Input:** repeat QA event ID qa-tripwise-family-link-20261018-002, which had already created one linked Airtable record.
+**Observed output:** Make execution 3e575e30102945e8ab991fdbe28911f4 completed only three modules (webhook, Data Store existence check, duplicate acknowledgement) in 275 ms. Module 14 returned HTTP 200 with JSON status=logged and the exact same event ID. The Data Store still contained four keys total, including only one key for this event, and no Airtable Create Record module ran on the replay.
+**Verdict:** duplicate routing and response acknowledgement passed for the synthetic QA event. This remains separate from a save initiated through the published app.
 
 ## Human review checkpoint
 
