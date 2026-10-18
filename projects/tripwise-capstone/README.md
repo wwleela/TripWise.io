@@ -39,6 +39,8 @@ TripWise is a working prototype for Indian travellers: authenticate, choose a su
 - `docs/automation-architecture-and-evidence.md` — scenario structure and actual test transcripts
 - `docs/responsible-ai-and-monitoring.md` — specific guardrails, bias mitigations and monitoring
 - `docs/pricing-gtm-growth.md` — price, positioning, VPC, funnel and growth loop
+- `docs/product-decisions-and-analytics.md` — product decision log, event taxonomy, metric formulas and release gates
+- `docs/research-sources-and-evidence.md` — research source register and evidence limitations
 - `evals/golden-dataset-and-scorecard.md` — 8-case dataset, rubric, assertions, and honest run status
 - `linkedin-launch-post.md` — recruiter-oriented post draft
 
