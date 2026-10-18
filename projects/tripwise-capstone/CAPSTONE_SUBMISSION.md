@@ -15,7 +15,7 @@ The product decision is deliberately narrower than a general-purpose travel chat
 
 The internal explanation is retained in Airtable with a Pending Review status. It is not displayed in the traveller UI. This is a deliberate scope and safety decision for the MVP.
 
-**Verified evidence:** three saved itinerary records were observed in the live Supabase database (Goa, Darjeeling and Pondicherry). The Make/Groq/Airtable workflow completed a successful execution for Pondicherry after an earlier test exposed a blank Groq output. That output failure led to a token-limit correction. The Persona-link path and stronger acknowledgement logic were then implemented, but they still require a fresh post-change end-to-end retest.
+**Verified evidence as of 18 October 2026:** three app-saved itinerary records were observed in the live Supabase database (Goa, Darjeeling and Pondicherry). A prior app-triggered Pondicherry run produced a non-empty, caveated internal note; an earlier Darjeeling run exposed a blank Groq output and led to the token-limit correction. After the latest changes, synthetic webhook QA verified the non-empty Groq output, a genuine linked Family Trip Coordinator Persona, Pending Review status, matching `status=logged` acknowledgement, and duplicate-event replay without a second Airtable create. This is synthetic workflow evidence, not a fresh save from the published app. The eight golden app cases, public signed-out app access, public Airtable assessor link, cross-user isolation test and traveller-UI explanation test remain unverified release gates.
 
 # Part 1 — Research, persona and feature PRD
 
@@ -138,8 +138,8 @@ Scale: Reach = relative reachable segment (1–10), Impact = expected user/busin
 
 ## 1.6 Airtable base and data model
 
-**Airtable base:** https://airtable.com/appYkjF5PDb1ZOyJd  
-Assessors need view access; verify “Anyone with the link can view” in a signed-out/incognito browser before final submission.
+**Airtable working base/editor URL (not yet verified as a public assessor share link):** https://airtable.com/appYkjF5PDb1ZOyJd  
+**Submission gate:** in Airtable, open **Share and sync → Create link to view → Copy link**. Replace the working/editor URL above with that copied public share/view URL, then prove it opens in a signed-out/incognito window. Do not submit the editor URL as though public sharing were verified.
 
 Tables and relationship pattern:
 - Personas: two explicitly labelled proto-persona hypotheses.
@@ -243,16 +243,16 @@ Use INR and plain language for Indian travellers. Do not imply live fares, hotel
 | Node | Trigger / logic / action | Inputs and safeguards | Observable evidence |
 |---|---|---|---|
 | 1. Custom Webhook | Trigger on saved trip | Opaque event ID, destination, duration, traveller type/count, pace, budget/estimate, over-budget state, title; no email/account ID | Three actual app-triggered deliveries observed |
-| 2. Data Store Exists | Logic: deduplicate | Checks itinerary_event_id in Data Store 222515 | Existing event IDs are stored; explicit same-event replay test still required |
+| 2. Data Store Exists | Logic: deduplicate | Checks itinerary_event_id in Data Store 222515 | Synthetic QA replay for event `qa-tripwise-family-link-20261018-002` ran only webhook → existence check → duplicate acknowledgement; no second Airtable Create Record operation ran. App-originated retest remains pending. |
 | 3. Groq | Action: one-sentence reviewer note | GPT-OSS 20B via Make’s connected Groq account; data-only prompt; temperature 0.1; 500-token cap; no ungrounded live claims | One blank output surfaced and led to correction; later non-empty text verified |
-| 4. Airtable Persona search | Logic: exact stable key lookup | Uses traveller_type to choose a stable Persona Key, then queries the real Persona row | Two real Persona rows and stable keys now exist; post-change link retest outstanding |
-| 5. Airtable Create Record | Action: Itinerary_Log write | Timestamp, summary, AI Explanation, Pending Review, real linked Persona record ID | One pre-linking real record created; current mapping requires post-change verification |
-| 6. Data Store Add | Action: record event processed | Key = itinerary_event_id, runs after Airtable succeeds | Two keys exist from prior executions |
-| 7. Webhook Respond | Action: processing acknowledgement | Returns status=logged and echoes event ID only after successful modules | New response-contract behaviour deployed; live test pending |
+| 4. Airtable Persona search | Logic: exact stable key lookup | Uses traveller_type to choose a stable Persona Key, then queries the real Persona row | Synthetic family QA lookup returned real record `recSWWMeGcEktR5pb` (Family Trip Coordinator); app-originated retest remains pending. |
+| 5. Airtable Create Record | Action: Itinerary_Log write | Timestamp, summary, AI Explanation, Pending Review, real linked Persona record ID | Synthetic QA created `recQtH0nodr0RigUv` with non-empty explanation, `Pending Review`, and Persona linked to `recSWWMeGcEktR5pb`; app-originated retest remains pending. |
+| 6. Data Store Add | Action: record event processed | Key = itinerary_event_id, runs after Airtable succeeds | Synthetic event key was stored once; its duplicate replay added no second Airtable record. |
+| 7. Webhook Respond | Action: processing acknowledgement | Returns status=logged and echoes event ID only after successful modules | Synthetic first-run and duplicate-run responses both returned HTTP 200 JSON with `status=logged` and the matching event ID; fresh app save still pending. |
 
 **Human review gate:** every log record is Pending Review. The explanation is a private internal reviewer artifact. No traveller-facing path renders it, even after a reviewer’s status change, until a separate approval-status integration is designed and tested.
 
-**Reliability improvement:** save-itinerary now marks logging successful only if Make returns an HTTP success response and JSON with status logged plus the same itinerary_event_id. Otherwise it reports logging failed; the trip remains saved. The new acknowledgement flow is not yet counted as end-to-end verified until the next test.
+**Reliability improvement:** `save-itinerary` marks logging successful only when Make returns an HTTP success response and JSON containing `status=logged` plus the same `itinerary_event_id`. Otherwise it reports logging failed; the saved trip is preserved. The current synthetic QA confirms the success and duplicate acknowledgement contract, but does not prove the published app is bound to this Supabase project or that a fresh app save triggers the latest flow.
 
 ## 2.4 Real automation transcripts
 
