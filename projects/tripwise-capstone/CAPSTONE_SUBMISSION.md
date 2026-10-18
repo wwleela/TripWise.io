@@ -276,10 +276,17 @@ Observed output: main Make execution 867fc9a830514862be741cbff0952484 completed 
 
 Verdict: the straight-through Make → Groq → exact Persona lookup → linked Airtable record → Data Store → explicit acknowledgement path passed for this synthetic QA event. This does not prove that the published app has triggered the updated payload.
 
-### Run E — duplicate-event suppression
-The identical event ID was posted again. Make completed only the webhook and Data Store existence check in 296 ms; it created no second Airtable row. The current default response was plain text “Accepted” instead of the expected JSON acknowledgement, so the replay was not yet a full acknowledgement-contract pass. A dedicated duplicate branch is being configured to return logged + the same event ID without rerunning Groq or writing another row. Do not claim that correction passes until a replay test confirms it.
+### Run E — first duplicate attempt before acknowledgement correction
+The event `qa-tripwise-family-link-20261018-001` was replayed before the duplicate-response branch was fixed. Make completed only the webhook and Data Store existence check in 296 ms and did not create another Airtable row, but returned plain-text “Accepted” rather than the required JSON acknowledgement. This exposed a response-contract gap.
 
-**Required follow-up after this manuscript:** save one new itinerary in the published app after the new persona_key payload and acknowledgement updates. Inspect the latest Make execution and Airtable row, verify a clickable linked Persona field, ensure the nonempty explanation stays internal, then replay the same event ID in a controlled test to verify deduplication. Do not claim the new link or duplicate-replay check has passed until observed.
+### Run F — linked Persona and explicit duplicate acknowledgement after correction
+**First delivery input:** event ID `qa-tripwise-family-link-20261018-002`; title “QA TEST — Persona Link — Family Trip 002”; destination Pondicherry; 3 days; family; 3 travellers; relaxed; budget ₹18,000; estimated total ₹12,800; not over budget.
+
+**Observed first-run output:** Make execution `048693a631d0426292d2c4325a2273a5` completed 7 operations in 3.752 seconds with zero module errors. Groq returned a non-empty, cautious sentence: “This 3‑day relaxed family trip to Pondicherry has a total budget of 18000, an estimated cost of 12800, and is within budget, but the suitability of the actual activities cannot be assessed from the supplied metadata alone.” Airtable created `recQtH0nodr0RigUv`; the explanation was non-empty, Review Status was `Pending Review`, and its Persona linked field contained the actual record ID `recSWWMeGcEktR5pb` (Family Trip Coordinator). Data Store stored the event ID. Make returned HTTP 200 JSON `{"status":"logged","itinerary_event_id":"qa-tripwise-family-link-20261018-002"}`.
+
+**Observed replay output:** execution `3e575e30102945e8ab991fdbe28911f4` completed 3 operations in 275 ms: webhook, Data Store existence check, and duplicate acknowledgement. The response was HTTP 200 JSON with `status=logged` and the same event ID. The Airtable Create Record module did not run on replay, so no duplicate Airtable row was created.
+
+**Verdict:** the synthetic new-event and replay acknowledgement paths pass after router correction. This is not a fresh app-generated save. Release still requires one new save from the published app, confirming the project/backend binding, Groq/Airtable fields and Supabase `explanation_log_status=logged`; the eight golden cases; signed-out app/Airtable access; cross-user isolation; and the traveller UI check that internal explanations never appear. Do not claim those gates passed from synthetic webhook evidence.
 
 ## 2.5 App Evals
 
