@@ -20,4 +20,6 @@ This is a working prototype, not a production travel recommendation system. My n
 
 #AIProductManagement #ProductManagement #ResponsibleAI #TravelTech #NoCode #Supabase #Make #Groq #Airtable
 
-Portfolio: https://github.com/wwleela/wwleela.github.io/tree/main/projects/tripwise-capstone
+Try the prototype: https://ai-trip-planner-web-7ogc.bolt.host
+
+Portfolio case study: https://github.com/wwleela/TripWise.io/tree/main/projects/tripwise-capstone
