@@ -56,6 +56,17 @@ It also checks the Make response body before marking logging successful. The mai
 6. Replay the same event ID in a controlled safe test and verify no second Airtable record is created.
 7. Check failure path: save must survive if Make/Groq/Airtable fails; logging state must not falsely become logged.
 
+### Test 4 — synthetic QA payload; linked Persona write and acknowledgement verified
+**Test type:** direct QA POST to the Make webhook from an on-demand Make test harness. This is deliberately labelled QA and is **not** an app-generated trip.
+**Input:** event ID qa-tripwise-family-link-20261018-001; title “QA TEST — Persona Link — Family Trip”; destination Pondicherry; 3 days; family; 3 travellers; relaxed pace; budget ₹18,000; estimated total ₹12,800; over_budget=false.
+**Observed output:** Make execution 867fc9a830514862be741cbff0952484 completed 7 operations in 3.706 seconds with zero module errors. Groq produced: “The metadata indicates a 3‑day relaxed family trip to Pondicherry with a budget of 18,000, an estimated cost of 12,800, and that it is not over budget.” Airtable created review row rec7jnhIi592Vhvmi with Review Status Pending Review and linked Persona record ID recSWWMeGcEktR5pb (Family Trip Coordinator). The Data Store contains the test event key. Make returned HTTP 200 with JSON status=logged and the matching event ID.
+**Verdict:** the straight-through Make → Groq → exact Persona lookup → real linked Airtable record → Data Store → acknowledgement path passed for this synthetic QA event. This does not prove the published app itself fired the new payload.
+
+### Test 5 — duplicate replay before duplicate-ack branch correction
+**Input:** repeat the exact QA event ID qa-tripwise-family-link-20261018-001.
+**Observed output:** Make execution effe5b2f0c734aa49eb8206cf50aff0d completed only the webhook and Data Store existence check, in 296 ms. No second Airtable row was created. The default HTTP body was plain text “Accepted”, not the explicit JSON acknowledgement expected by save-itinerary.
+**Verdict:** duplicate suppression worked, but the acknowledgement contract was incomplete for replays. A dedicated duplicate route is being configured to return the same logged/event-ID JSON without repeating Groq or Airtable writes. Do not claim the duplicate-ack branch passes until its replay test is observed.
+
 ## Human review checkpoint
 
 The Make/Groq sentence is a review artifact, not a customer output. Airtable is the internal queue. A reviewer may mark Approved, Rejected or Reviewed, but the current MVP does not display the explanation in the traveller app even after approval. Approval visibility changes are explicitly out of scope until a separate approval-status integration is designed and tested.
