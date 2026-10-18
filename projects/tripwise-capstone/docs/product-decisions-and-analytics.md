@@ -52,7 +52,7 @@ Reach uses a relative 1–10 score, Impact 1–5, Confidence 0–1 and Effort in
 | Idea | Reach | Impact | Confidence | Effort | RICE | Decision |
 |---|---:|---:|---:|---:|---:|---|
 | Budget guardrails and lower-cost alternatives | 8 | 5 | 0.80 | 3 | 10.67 | Selected |
-| Family pacing and interest-fit controls | 6 | 5 | 0.70 | 4 | 5.25 | Selected in Airtable; revisit after prototype scope review |
+| Family pacing and interest-fit controls | 6 | 5 | 0.70 | 4 | 5.25 | Not selected |
 | Catalogue variety beyond top popular destinations | 5 | 4 | 0.60 | 3 | 4.00 | Proposed |
 | Assumption-transparent category cost breakdown | 7 | 4 | 0.65 | 4 | 4.55 | Proposed |
 
