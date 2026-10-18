@@ -12,7 +12,7 @@ The integration work taught me as much as the UI:
 - A typed persona name is not the same as a real linked record.
 - “AI-powered” is not a product strategy; the model needs a bounded job, evidence and guardrails.
 
-One live test exposed an empty Groq explanation due to its token cap. I corrected the output budget, reran the workflow and verified a non-empty explanation and Airtable record. The latest Persona-link and acknowledgement changes still require a fresh end-to-end retest, and I’m not presenting the eight-case app evaluation suite as complete until the cases are actually run.
+One live test exposed an empty Groq explanation due to its token cap. I corrected the output budget, reran the workflow and verified a non-empty explanation and Airtable record. A labelled webhook QA test now verifies the linked Persona write and the duplicate-event acknowledgement path. The remaining integration gate is one fresh save initiated inside the published app; I’m not presenting the eight-case app evaluation suite as complete until the cases are actually run.
 
 My current product stance: optimise for budget integrity and user trust before adding live inventory, booking claims or feature breadth.
 
