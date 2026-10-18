@@ -5,7 +5,7 @@
 **Stack:** Bolt + Supabase + Make + Groq + Airtable  
 **Status date:** 18 October 2026
 
-> **Submission instruction:** This is the working master manuscript, not the final graded submission. The course requires one Google Doc link only. Copy this complete manuscript into one Google Doc, insert the verified public Bolt app URL and Airtable share-view URL where marked, set the Google Doc to “Anyone with the link can view,” and submit that single Google Doc URL. GitHub is supplemental portfolio evidence and cannot replace the required Google Doc.
+> **Submission instruction:** This is the working master manuscript, not the final graded submission. The course requires one Google Doc link only. Copy this complete manuscript into one Google Doc, keep the published app URL embedded in Part 2 below and the Airtable base URL in Part 1 §1.6, verify both open in a signed-out/incognito window, set the Google Doc to “Anyone with the link can view,” and submit that single Google Doc URL. GitHub is supplemental portfolio evidence and cannot replace the required Google Doc.
 
 ## Executive summary
 
@@ -185,6 +185,10 @@ Rejected: a general free-form travel chatbot connected to live hotel/flight clai
 **Out of scope:** live booking, live airfare/hotel inventory, price tracking, map/routing optimisation, payments, group cost splitting, and a traveller-facing display of the internal AI explanation.
 
 # Part 2 — Prototype, automation, Evals and Responsible AI
+
+**Published no-code app:** https://ai-trip-planner-web-7ogc.bolt.host
+
+Use the published app above to run the eight golden cases in §2.5. This URL is included in the manuscript so that it will be present when copied into the single Google Doc submission.
 
 ## 2.1 Six-part app-generation prompt
 
