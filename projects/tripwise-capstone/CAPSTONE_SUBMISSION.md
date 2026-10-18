@@ -462,3 +462,22 @@ Current stage immediately after a limited prototype pilot: **Introduction**, bec
 - [ ] Run all 8 golden dataset inputs through the actual app; score every rubric and binary assertion from observed output.
 - [ ] Verify a user cannot read another user’s trips; verify internal explanation never appears in the traveller UI.
 - [ ] Copy this manuscript to one Google Doc, set “Anyone with the link can view,” embed Airtable and published app links in Parts 1 and 2, and submit that one Google Doc URL.
+---
+
+## Release checklist status — 18 October 2026
+
+This status separates observed proof from untested release gates. Synthetic webhook QA must not be represented as an app-originated end-to-end pass.
+
+| Gate | Current status | Evidence / remaining action |
+|---|---|---|
+| Published Bolt URL inserted in Part 2 | **Inserted; signed-out access not verified** | URL: https://ai-trip-planner-web-7ogc.bolt.host. Open it in a signed-out/incognito browser to prove the public page responds. A cache miss in the research/browser environment is inconclusive. |
+| Airtable assessor share link | **Not verified** | The URL currently listed in Part 1 is the working base/editor URL, not a verified public share/view URL. In Airtable, use **Share and sync → Create link to view → Copy link**, replace the Part 1 URL with that copied link, then open it signed out. |
+| Fresh app-originated save after latest changes | **Not yet tested** | No new app-originated trip appeared after the last observed app save. A fresh signed-in save is required to confirm the published app is connected to the deployed function and current Make webhook. |
+| Non-empty Groq text | **Passed on synthetic QA only** | Event qa-tripwise-family-link-20261018-002 produced the caveated non-empty internal sentence quoted in Run F. |
+| Genuine linked Persona and Pending Review | **Passed on synthetic QA only** | Airtable row recQtH0nodr0RigUv links to Family Trip Coordinator record recSWWMeGcEktR5pb and has Review Status Pending Review. |
+| Supabase explanation_log_status=logged only after acknowledgement | **Function logic verified; app end-to-end not verified** | Active save-itinerary version 7 on project uwbhcqywmgcosyqwmmlq requires HTTP success and a JSON acknowledgement containing status=logged plus the matching event ID. The published app's actual Supabase project binding still needs confirmation; the separate project reference oqxnlkdnqcbciiszyalp could not be inspected with current connector permissions. |
+| Duplicate replay avoids second Airtable record | **Passed on synthetic QA only** | Replaying event qa-tripwise-family-link-20261018-002 ran only the webhook, existence check and duplicate acknowledgement modules; Airtable Create Record did not run. |
+| Eight golden dataset inputs run through the actual app | **Not tested** | Keep all G1–G8 scores and assertions marked Not tested until actual deployed-app outputs are captured and scored. |
+| Cross-user trip access blocked | **RLS policy inspected; two-user acceptance test not run** | trips has RLS enabled and select_own_trips uses auth.uid() = user_id. Verify behavior with two distinct test users before claiming acceptance passed. |
+| Internal explanation never appears in traveller UI/API | **API response shape checked; traveller UI acceptance test not run** | save-itinerary returns trip ID, event ID, status and message—not the explanation. Check saved-trip screens and any trip-detail/API routes in the published app to prove no explanation is exposed. |
+| One Google Doc, Anyone with the link can view | **Not created** | The graded deliverable is one Google Doc URL only. Copy this complete manuscript into one Google Doc, preserve Part 1–4 order, replace the Airtable editor URL with the public share/view link, retain the published app URL in Part 2, set view access for anyone with the link, test both links signed out, then submit only that Google Doc URL. |
