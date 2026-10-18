@@ -7,7 +7,6 @@
 - **Airtable working base/editor URL:** https://airtable.com/appYkjF5PDb1ZOyJd (not yet verified as the public assessor share/view link; replace this with a copied public view link before submission)
 - **GitHub project folder:** https://github.com/wwleela/TripWise.io/tree/main/projects/tripwise-capstone
 - **Master capstone manuscript:** https://github.com/wwleela/TripWise.io/blob/main/projects/tripwise-capstone/CAPSTONE_SUBMISSION.md
-- **LinkedIn draft:** https://github.com/wwleela/TripWise.io/blob/main/projects/tripwise-capstone/linkedin-launch-post.md
 
 ## What this project demonstrates
 - Product discovery and explicitly labelled proto-personas.
