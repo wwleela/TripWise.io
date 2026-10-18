@@ -129,7 +129,7 @@ Scale: Reach = relative reachable segment (1–10), Impact = expected user/busin
 
 | Candidate | Primary persona | Reach | Impact | Confidence | Effort | RICE arithmetic | Score | Decision |
 |---|---|---:|---:|---:|---:|---|---:|---|
-| A. Catalogue-grounded day-by-day planner with visible INR total and over-budget guardrail | Self-Serve Value Planner | 8 | 5 | 0.70 | 3 | (8 × 5 × 0.70) ÷ 3 | 9.33 | Selected |
+| A. Budget guardrails and lower-cost alternatives inside a catalogue-grounded day-by-day planner | Self-Serve Value Planner | 8 | 5 | 0.80 | 3 | (8 × 5 × 0.80) ÷ 3 | 10.67 | Selected |
 | B. Conversational planner with clarifying questions and revisions | Self-Serve Value Planner | 7 | 4 | 0.65 | 4 | (7 × 4 × 0.65) ÷ 4 | 4.55 | Not selected |
 | C. Live flight/hotel comparison and booking suggestions | Family Trip Coordinator | 8 | 5 | 0.35 | 9 | (8 × 5 × 0.35) ÷ 9 | 1.56 | Not selected |
 | D. Group expense splitting and collaborative itinerary voting | Family Trip Coordinator | 4 | 3 | 0.60 | 5 | (4 × 3 × 0.60) ÷ 5 | 1.44 | Not selected |
