@@ -23,7 +23,7 @@ The traveller-facing itinerary is generated deterministically from a curated cat
 ## Verified evidence and gaps
 Three saved trips were observed in Supabase: Goa, Darjeeling and Pondicherry. A previous Make test produced a blank Groq explanation at a 120-token limit; a later test produced a nonempty, appropriately caveated explanation and an Airtable row. Read-only Make tests confirmed that the family Persona lookup returns Family Trip Coordinator and the solo lookup returns Self-Serve Value Planner.
 
-The latest Make flow changes need a fresh end-to-end run and same-event replay check. The eight golden app eval cases are specified but not yet run. Do not claim those as passed.
+Synthetic webhook QA now passes: the straight-through path created a Pending Review record with a genuine linked Persona; replaying the same event returned the explicit logged/event-ID acknowledgement without creating a second row. This does not prove the published app’s save-itinerary function has fired the latest payload; one fresh app-generated save remains a release gate. The eight golden app eval cases are specified but not yet run.
 
 ## Repository contents
 - CAPSTONE_SUBMISSION.md — complete four-part master manuscript
