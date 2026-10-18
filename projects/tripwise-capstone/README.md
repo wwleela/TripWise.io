@@ -4,7 +4,7 @@
 
 ## Live artefacts
 - **Published app:** https://ai-trip-planner-web-7ogc.bolt.host
-- **Airtable research and review base:** https://airtable.com/appYkjF5PDb1ZOyJd
+- **Airtable working base/editor URL:** https://airtable.com/appYkjF5PDb1ZOyJd (not yet verified as the public assessor share/view link; replace this with a copied public view link before submission)
 - **GitHub project folder:** https://github.com/wwleela/TripWise.io/tree/main/projects/tripwise-capstone
 - **Master capstone manuscript:** https://github.com/wwleela/TripWise.io/blob/main/projects/tripwise-capstone/CAPSTONE_SUBMISSION.md
 - **LinkedIn draft:** https://github.com/wwleela/TripWise.io/blob/main/projects/tripwise-capstone/linkedin-launch-post.md
@@ -23,7 +23,7 @@ The traveller-facing itinerary is generated deterministically from a curated cat
 ## Verified evidence and gaps
 Three saved trips were observed in Supabase: Goa, Darjeeling and Pondicherry. A previous Make test produced a blank Groq explanation at a 120-token limit; a later test produced a nonempty, appropriately caveated explanation and an Airtable row. Read-only Make tests confirmed that the family Persona lookup returns Family Trip Coordinator and the solo lookup returns Self-Serve Value Planner.
 
-Synthetic webhook QA now passes: the straight-through path created a Pending Review record with a genuine linked Persona; replaying the same event returned the explicit logged/event-ID acknowledgement without creating a second row. This does not prove the published app’s save-itinerary function has fired the latest payload; one fresh app-generated save remains a release gate. The eight golden app eval cases are specified but not yet run.
+Synthetic webhook QA now passes for the latest tested event: Groq text was non-empty; Airtable row recQtH0nodr0RigUv had Review Status Pending Review and a genuine linked Family Trip Coordinator Persona (recSWWMeGcEktR5pb); Make returned HTTP 200 JSON with status=logged and the same event ID. Replay ran only the webhook, dedupe check and duplicate acknowledgement modules and did not execute Airtable Create Record. This is synthetic QA, not an app-originated save. A fresh app save, public signed-out access checks, two-user isolation test, traveller-UI internal-explanation check, public Airtable assessor share link, and the eight golden app eval cases remain release gates.
 
 ## Repository contents
 - CAPSTONE_SUBMISSION.md — complete four-part master manuscript
