@@ -8,6 +8,10 @@
 - **GitHub project folder:** https://github.com/wwleela/TripWise.io/tree/main/projects/tripwise-capstone
 - **Master capstone manuscript:** https://github.com/wwleela/TripWise.io/blob/main/projects/tripwise-capstone/CAPSTONE_SUBMISSION.md
 
+## Future product discovery (separate from current capstone)
+
+- [B2B travel distribution / wholesale fit assessment](projects/tripwise-capstone/docs/b2b-travel-distribution-fit.md) — exploratory track for travel-agent net rates, supplier confirmation and quote margins. This is not implemented in the current consumer itinerary planner and must be validated with agents and suppliers before building.
+
 ## What this project demonstrates
 - Product discovery and explicitly labelled proto-personas.
 - RICE prioritisation, PRD-lite, INVEST user stories and precise metrics.
