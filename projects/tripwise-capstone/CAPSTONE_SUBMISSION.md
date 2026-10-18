@@ -241,7 +241,7 @@ Use INR and plain language for Indian travellers. Do not imply live fares, hotel
 | 1. Custom Webhook | Trigger on saved trip | Opaque event ID, destination, duration, traveller type/count, pace, budget/estimate, over-budget state, title; no email/account ID | Three actual app-triggered deliveries observed |
 | 2. Data Store Exists | Logic: deduplicate | Checks itinerary_event_id in Data Store 222515 | Existing event IDs are stored; explicit same-event replay test still required |
 | 3. Groq | Action: one-sentence reviewer note | GPT-OSS 20B via Make’s connected Groq account; data-only prompt; temperature 0.1; 500-token cap; no ungrounded live claims | One blank output surfaced and led to correction; later non-empty text verified |
-| 4. Airtable Persona search | Logic: exact stable key lookup | Uses stable Persona Key, not fuzzy model matching | Two real Persona rows and stable keys now exist; post-change link retest outstanding |
+| 4. Airtable Persona search | Logic: exact stable key lookup | Uses traveller_type to choose a stable Persona Key, then queries the real Persona row | Two real Persona rows and stable keys now exist; post-change link retest outstanding |
 | 5. Airtable Create Record | Action: Itinerary_Log write | Timestamp, summary, AI Explanation, Pending Review, real linked Persona record ID | One pre-linking real record created; current mapping requires post-change verification |
 | 6. Data Store Add | Action: record event processed | Key = itinerary_event_id, runs after Airtable succeeds | Two keys exist from prior executions |
 | 7. Webhook Respond | Action: processing acknowledgement | Returns status=logged and echoes event ID only after successful modules | New response-contract behaviour deployed; live test pending |
