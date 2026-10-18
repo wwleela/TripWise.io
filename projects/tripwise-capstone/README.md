@@ -23,7 +23,7 @@ TripWise is a working prototype for Indian travellers: authenticate, choose a su
 | Catalogue | 10 destinations, 52 activities | Live table counts verified |
 | Itinerary logic | Deterministic selection from curated catalogue; server-side total recomputation | Source inspected; real Goa, Darjeeling and Pondicherry trips saved |
 | Internal AI review | Make + Groq `openai/gpt-oss-20b` | Two scenario executions inspected; one blank response exposed a token-limit issue; later run produced non-empty text |
-| Human review log | Airtable `Itinerary_Log` | Real rows created; stable Persona key and linked-record routing now configured, awaiting fresh end-to-end verification |
+| Human review log | Airtable `Itinerary_Log` | Real rows created; both deterministic Persona lookup branches returned the intended Airtable record IDs in read-only QA. A fresh app-save test is still required to verify the linked-record write end to end. |
 | Idempotency | Make Data Store `222515` | Event keys stored on successful prior runs; explicit same-event replay test still required |
 
 ## Current live evidence
